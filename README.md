@@ -5,6 +5,9 @@ Daniel, 2024-04-01
 # 环境相关
 ## 环境变量
 
+### cmd操作
+在cmd里输入```%path%```得到环境变量。在powershell里面没用，会导致炸环境变量。
+
 临时添加
 ```
 path = %path%;C:\ProgramData\anaconda3\Scripts;C:\ProgramData\anaconda3
@@ -20,7 +23,40 @@ SETX path "%path%;C:\ProgramData\anaconda3\Scripts;C:\ProgramData\anaconda3"
 SETX /M path "%path%;C:\ProgramData\anaconda3\Scripts;C:\ProgramData\anaconda3" 
 ```
 
-## 镜像源
+### powershell操作
+
+查询环境变量：简单的写法```$env:path```，可以解决问题，但更标准的写法是```Write-Output $env:path```
+
+## 使用scoop包管理器
+
+一键安装scoop脚本
+```
+Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+```
+
+搜索python包
+```
+scoop search python
+```
+
+安装python：请务必指定版本
+```
+scoop install python310
+scoop reset python312
+```
+
+
+
+
+## pypi镜像源
+### pip导出安装包
+```
+pip freeze>requirements.txt
+```
+
+生成安装脚本
+
+
 
 ### pip换源操作
 
@@ -70,6 +106,7 @@ match var:
 匹配：如果```key```和后面的```tuple```是同类
 ```
 isinstance(key, tuple)
+isinstance(config['委托分级类别'], (int, float))
 ```
 ## 字符串处理
 
@@ -307,7 +344,7 @@ print('程序耗时%s' % round((time.time()-start), 2))
 ```
 
 
-# 系统
+# 系统与网络开发
 ## 防火墙一键开启端口脚本（管理员）
 TCP协议，允许12345端口入站出站
 ```
@@ -325,7 +362,18 @@ netsh advfirewall firewall add rule name="allow_udp_12345" dir=out action=allow 
 netsh advfirewall firewall add rule name="ICMP Allow incoming V4 echo request" protocol=icmpv4:8,any dir=in action=allow
 ```
 
+## 套接字socket
+
+## FTP文件传输
+
+## SCP文件传输
+
 # 文件读写
+
+## 创建文件夹
+
+```os.mkdir(local_path)```创建文件夹，但是父文件夹不存在会报错，需要使用```os.makedirs(local_path, exist_ok = True)```
+
 ## 路径遍历
 
 ```
@@ -357,6 +405,10 @@ file_name.split('.')[1] == 'gzip'
 file_name.endswith('gzip')
 ```
 
+多后缀判别
+```
+name.endswith(('.zip', '.rar'))
+```
 
 ## 复制文件
 复制文件。这里给了一个随机抽样复制文件的例子
@@ -414,6 +466,25 @@ f = pd.read_csv()
 ## 压缩包读写
 
 
+```
+import zipfile
+import io
+
+# 打开外部ZIP文件
+with zipfile.ZipFile('path/to/outer.zip', 'r') as outer_zip:
+    # 获取内部ZIP文件的名称，这里假设我们知道内部ZIP文件的名称
+    inner_zip_name = 'inner.zip'
+    
+    # 从外部ZIP文件中读取内部ZIP文件的内容
+    with outer_zip.open(inner_zip_name) as inner_zip_file:
+        inner_zip_bytes = io.BytesIO(inner_zip_file.read())
+        
+        # 使用BytesIO对象来访问内部ZIP文件
+        with zipfile.ZipFile(inner_zip_bytes) as inner_zip:
+            # 现在你可以列出内部ZIP文件中的文件了，或者进行其他操作
+            print(inner_zip.namelist())
+
+```
 
 
 ### gz/gzip压缩包
@@ -437,6 +508,14 @@ https://zhuanlan.zhihu.com/p/341572070
 
 优化数据结构：使用更适合的数据结构，比如Pandas的DataFrame，这样可以利用Pandas库提供的丰富功能，简化很多数据处理任务。
 
+## 停用警告
+```
+import warnings
+import pandas as pd
+
+# Suppress FutureWarning messages
+warnings.simplefilter(action='ignore', category=FutureWarning)
+```
 
 ## DataFrame
 两种遍历方式
@@ -489,6 +568,14 @@ ocr = ddddocr.DdddOcr(show_ad = False)
 
 
 # 性能测试工具
+
+# @timeit
+在jupyter notebook中使用
+
+```
+@timeit(repeat = 3, number = 10)
+```
+
 ## cProfile
 
 ```
@@ -509,6 +596,8 @@ lp.print_stats()
 # 程序性能优化：向量化计算 Numba 
 
 https://numba.readthedocs.io/en/stable/user/5minguide.html
+
+https://zhuanlan.zhihu.com/p/489220950
 
 # 程序性能优化：多线程 多进程 并行开发
 
@@ -537,5 +626,6 @@ from concurrent.futures import ProcessPoolExecutor
 with ProcessPoolExecutor(max_workers=config['进程数']) as pool:
     pool.submit(main, cfg)
 ```
+
 
 
