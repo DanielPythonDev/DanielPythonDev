@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Python与环境变量"
-date:  2024-04-10 06:14:54
+date:  2024-04-10 10:14:54
 categories: 环境变量
 tags: 环境变量
 excerpt: Python与环境变量
