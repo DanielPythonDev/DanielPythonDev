@@ -8,6 +8,7 @@ excerpt: Python与环境变量
 mathjax: true
 ---
 
+本文联合创作：@Hanhan666666 & @sky96111
 
 # 环境相关
 ## 环境变量
