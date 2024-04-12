@@ -11,6 +11,14 @@ mathjax: true
 本文联合创作：@Hanhan666666 & @sky96111
 
 # 环境相关
+
+## python多版本共存
+
+安装多个版本的python，需要安装在不同的目录下，全部添加到环境变量。```where python```和```where pip```操作会告诉你目前环境变量中包含哪些python。使用诸如vscode、pycharm的IDE可以很方便的指定指定版本的python，创建虚拟环境。
+
+当然也有手动方案。在对应目录下python.exe和pip.exe复制一份，然后重命名到python310.exe和pip310.exe，也就是加上版本号。这不一定管用，请确保python310.exe同目录下存在```python310.dll```。
+
+
 ## 环境变量
 
 ### cmd操作
