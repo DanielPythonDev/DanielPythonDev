@@ -4,7 +4,7 @@ title:  "【vmware】绕过虚拟机检测——为VMware虚拟机Bypass Virtual
 date:  2022-07-27 00:16:54
 categories: vmware 
 tags: 
-excerpt: .
+excerpt: 绕过虚拟机检测——为VMware虚拟机Bypass Virtual Machine detection for a windows 10 VMware
 mathjax: true
 ---
 
